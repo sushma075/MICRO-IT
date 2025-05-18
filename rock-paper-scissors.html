@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rock Paper Scissors Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+      background-color: #f0f0f0;
+    }
+    h1 {
+      color: #333;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    button:hover {
+      transform: scale(1.1);
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #0077cc;
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Rock Paper Scissors</h1>
+
+  <button onclick="play('rock')">Rock</button>
+  <button onclick="play('paper')">Paper</button>
+  <button onclick="play('scissors')">Scissors</button>
+
+  <div id="result"></div>
+
+  <audio id="sound-win" src="sounds/win.mp3"></audio>
+  <audio id="sound-lose" src="sounds/lose.mp3"></audio>
+  <audio id="sound-tie" src="sounds/tie.mp3"></audio>
+
+  <script>
+    function play(userChoice) {
+      const choices = ['rock', 'paper', 'scissors'];
+      const computerChoice = choices[Math.floor(Math.random() * 3)];
+      let result = "";
+      let sound;
+
+      if (userChoice === computerChoice) {
+        result = "It's a tie!";
+        sound = document.getElementById("sound-tie");
+      } else if (
+        (userChoice === 'rock' && computerChoice === 'scissors') ||
+        (userChoice === 'paper' && computerChoice === 'rock') ||
+        (userChoice === 'scissors' && computerChoice === 'paper')
+      ) {
+        result = "You win!";
+        sound = document.getElementById("sound-win");
+      } else {
+        result = "Computer wins!";
+        sound = document.getElementById("sound-lose");
+      }
+
+      document.getElementById("result").innerHTML = `
+        You chose: <b>${userChoice}</b><br>
+        Computer chose: <b>${computerChoice}</b><br>
+        <strong>${result}</strong>
+      `;
+
+      sound.play();
+    }
+  </script>
+
+</body>
+</html>
